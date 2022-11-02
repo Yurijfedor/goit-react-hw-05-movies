@@ -9,6 +9,7 @@ export const theme = {
     green: '#00ff00',
     red: '#ff0000',
     blue: '#0000ff',
+    orange: '#f08502',
     tableTextColor: '#686461',
     theadBgColor: '#8FD4C1',
     tableTrSecondaryBgColor: '#E8E6D1',
