@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
 import { FetchTrendingMovies } from 'services/TmdbApiServices';
-import { TrendingMovieItem } from 'components/TrendingMovieList';
+import { TrendingMovieItem } from 'components/TrendingMovieItem';
+import { Outlet } from 'react-router-dom';
 export const Home = () => {
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
     FetchTrendingMovies().then(response => {
       setMovieList(prevState => [...prevState, ...response.data.results]);
-      console.log(response);
     });
   }, []);
 
   return (
     <main>
-      {movieList.map(movie => {
-        return <TrendingMovieItem key={movie.id} link={movie} />;
-      })}
+      <ul>
+        {movieList.map((movie, i) => {
+          return <TrendingMovieItem key={i} link={movie} />;
+        })}
+      </ul>
+      <Outlet />
     </main>
   );
 };
