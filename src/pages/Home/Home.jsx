@@ -12,11 +12,13 @@ export const Home = () => {
 
   return (
     <main>
-      <ul>
-        {movieList.map((movie, i) => {
-          return <TrendingMovieItem key={i} link={movie} />;
-        })}
-      </ul>
+      {movieList.length !== 0 && (
+        <ul>
+          {movieList.map((movie, i) => {
+            return <TrendingMovieItem key={i} link={movie} />;
+          })}
+        </ul>
+      )}
       <Outlet />
     </main>
   );

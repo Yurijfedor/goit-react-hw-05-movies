@@ -1,12 +1,17 @@
 import { Link } from 'react-router-dom';
-export const TrendingMovieItem = ({ link: { title, name, id } }) => {
+
+export const TrendingMovieItem = ({ link: { title, name, id }, location }) => {
   return title ? (
     <li>
-      <Link to={`${id}`}>{title}</Link>
+      <Link to={{ pathname: `/movies/${id}` }} state={{ from: location }}>
+        {title}
+      </Link>
     </li>
   ) : (
     <li>
-      <Link to={`${id}`}>{name}</Link>
+      <Link to={{ pathname: `/movies/${id}` }} state={{ from: location }}>
+        {name}
+      </Link>
     </li>
   );
 };

@@ -1,6 +1,12 @@
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import {
+  NavLink,
+  Outlet,
+  useParams,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { StyledLink, StyledButton, StyledNav } from './MovieDetails.styled';
+import { StyledButton, StyledNav } from './MovieDetails.styled';
 import { ImArrowLeft2 } from 'react-icons/im';
 import { FetchMovieById, IMAGE_URL } from 'services/TmdbApiServices';
 import { Box } from 'constans';
@@ -8,6 +14,9 @@ import { Box } from 'constans';
 export const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location.state);
 
   useEffect(() => {
     FetchMovieById(movieId).then(response => {
@@ -15,11 +24,15 @@ export const MovieDetails = () => {
     });
   }, [movieId]);
 
+  const handleClick = () => {
+    navigate(location?.state?.from ?? '/');
+  };
+
   return (
     <main>
-      <StyledButton>
+      <StyledButton onClick={handleClick}>
         <ImArrowLeft2 />
-        <StyledLink to={'/'}>Go back</StyledLink>
+        Go back
       </StyledButton>
       {movie && (
         <>
