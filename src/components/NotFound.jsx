@@ -1,3 +1,4 @@
-export const NotFound = () => {
+const NotFound = () => {
   console.log('NotFound');
 };
+export default NotFound;

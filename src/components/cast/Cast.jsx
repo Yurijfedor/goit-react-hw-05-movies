@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FetchMovieCast, IMAGE_URL } from 'services/TmdbApiServices';
 import { Box } from 'constans';
-export const Cast = () => {
+const Cast = () => {
   const { movieId } = useParams();
   const [castList, setCastList] = useState([]);
 
@@ -34,3 +34,4 @@ export const Cast = () => {
     </>
   );
 };
+export default Cast;

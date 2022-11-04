@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FetchMovieReview } from 'services/TmdbApiServices';
 
-export const Reviews = () => {
+const Reviews = () => {
   const { movieId } = useParams();
   const [reviewList, setReviewList] = useState([]);
 
@@ -31,3 +31,4 @@ export const Reviews = () => {
     </>
   );
 };
+export default Reviews;

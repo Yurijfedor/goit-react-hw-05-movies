@@ -5,13 +5,13 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { StyledButton, StyledNav } from './MovieDetails.styled';
 import { ImArrowLeft2 } from 'react-icons/im';
 import { FetchMovieById, IMAGE_URL } from 'services/TmdbApiServices';
 import { Box } from 'constans';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
@@ -70,9 +70,12 @@ export const MovieDetails = () => {
               <NavLink to={`reviews`}>Reviews</NavLink>
             </li>
           </StyledNav>
-          <Outlet />
+          <Suspense fallback={<div>Loading subpage...</div>}>
+            <Outlet />
+          </Suspense>
         </>
       )}
     </main>
   );
 };
+export default MovieDetails;

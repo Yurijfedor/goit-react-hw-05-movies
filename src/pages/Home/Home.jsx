@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FetchTrendingMovies } from 'services/TmdbApiServices';
 import { TrendingMovieItem } from 'components/TrendingMovieItem';
 import { Outlet } from 'react-router-dom';
-export const Home = () => {
+const Home = () => {
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
     FetchTrendingMovies().then(response => {
@@ -23,3 +23,4 @@ export const Home = () => {
     </main>
   );
 };
+export default Home;
