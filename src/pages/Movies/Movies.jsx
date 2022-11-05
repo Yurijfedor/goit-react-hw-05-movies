@@ -1,6 +1,7 @@
 import { useSearchParams, useLocation, Outlet } from 'react-router-dom';
+import { Pagination, Stack } from '@mui/material';
+import { useState, useEffect, Suspense } from 'react';
 
-import { useState, useEffect } from 'react';
 import { StyledInput } from './Movies.styled';
 import { FetchSearchMovies } from 'services/TmdbApiServices';
 import { TrendingMovieItem } from 'components/TrendingMovieItem';
@@ -8,7 +9,10 @@ import { TrendingMovieItem } from 'components/TrendingMovieItem';
 const Movies = () => {
   const [movieList, setMovieList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
   const movieName = searchParams.get('query') ?? '';
   const location = useLocation();
 
@@ -16,24 +20,22 @@ const Movies = () => {
     if (!movieName) {
       return;
     }
-    FetchSearchMovies(movieName).then(response => {
+    FetchSearchMovies(movieName, page).then(response => {
       setMovieList([...response.data.results]);
+      setTotalPages(response.data.total_pages);
     });
-  }, [movieName]);
+  }, [movieName, page]);
 
   const handleSubmit = evt => {
     evt.preventDefault();
     setSearchParams({ query: query });
-    // evt.target.reset();
+    setPage(1);
     formReset();
   };
 
   const formReset = () => setQuery('');
 
   const updateQuery = evt => {
-    // const nextParams =
-    //   evt.target.value !== '' ? { query: evt.target.searshQuery.value } : {};
-    // setSearchParams(nextParams);
     setQuery(evt.target.value);
   };
 
@@ -60,7 +62,20 @@ const Movies = () => {
       ) : (
         ''
       )}
-      <Outlet />
+      <Stack spacing={2}>
+        {!!totalPages && (
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={(_, num) => setPage(num)}
+            showFirstButton
+            showLastButton
+          />
+        )}
+      </Stack>
+      <Suspense fallback={<div>Loading subpage...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

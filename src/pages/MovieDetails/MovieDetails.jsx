@@ -16,11 +16,12 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.state);
 
   useEffect(() => {
     FetchMovieById(movieId).then(response => {
-      setMovie(response.data);
+      response.data
+        ? setMovie(response.data)
+        : alert('The resource you requested could not be found.');
     });
   }, [movieId]);
 
@@ -53,7 +54,10 @@ const MovieDetails = () => {
             </div>
 
             <div>
-              <h2>{movie.title || movie.name}</h2>
+              <h2>
+                {movie.title || movie.name} (
+                {new Date(movie.release_date).getFullYear()})
+              </h2>
               <p>User score: {Math.round(movie.vote_average * 10)} %</p>
               <h3>Overview</h3>
               <p>{movie.overview}</p>

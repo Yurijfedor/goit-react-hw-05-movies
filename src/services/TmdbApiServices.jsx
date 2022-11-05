@@ -7,10 +7,10 @@ const options = new URLSearchParams({
 
 export const IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
 
-export const FetchTrendingMovies = async () => {
+export const FetchTrendingMovies = async page => {
   try {
     const trendingMovies = await axios.get(
-      `${BASE_URL}trending/all/week?${options}`
+      `${BASE_URL}trending/all/week?${options}&page=${page}`
     );
     return trendingMovies;
   } catch (error) {
@@ -49,10 +49,10 @@ export const FetchMovieReview = async id => {
   }
 };
 
-export const FetchSearchMovies = async query => {
+export const FetchSearchMovies = async (query, page) => {
   try {
     const searchMovies = await axios.get(
-      `${BASE_URL}search/movie?${options}&query=${query}`
+      `${BASE_URL}search/movie?${options}&query=${query}&page=${page}`
     );
     return searchMovies;
   } catch (error) {
